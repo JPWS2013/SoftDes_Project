@@ -8,23 +8,27 @@ class Trace(object):
 
 
 	def read_data(self, sensortype):
-		current_time=time.time()
-		self.update(current_time)
 		if sensortype.lower()=='accelerometer':
-			return 'i see your accelerometer'
+			return self.accelerometer()
 		if sensortype.lower()=='potentiometer':
-			return 'i see your potentiometer'
+			return self.potentiometer()
 
 
 
 
-	def accelerometer():
-	"""creates a dictionary with times as keys
- 	and [a_x,a_y,a_z] as values"""
- 		res=dict()
- 		for i in numpy.range(0,59):
- 		res[i]=math.sin(i*math.pi/30)
+	def accelerometer(self):
+		current_time=time.time()%60
+		z=math.sin(current_time*math.pi/30)
+		return [0,0,z]
 
- 		return res
+	def potentiometer(self):
+		current_time=time.time()%30
+		pos=1/current_time
+		return pos
+		
+ 		
 
 
+trace=Trace()
+
+print trace.read_data('accelerometer')
