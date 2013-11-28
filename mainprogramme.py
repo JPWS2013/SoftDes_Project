@@ -14,7 +14,7 @@ pot=controller.Potentiometer(model, 10000, 270, 'Potentiometer 1', 'Gas Pedal', 
 #model.store_sensor(pot)
 #label=controller.SensorLabel('Potentiometer 1', 'Gas Pedal')
 
-accel=controller.Accelerometer(model, 'Accelerometer 1', 'IMU', 0.3, 2.88, 0.2, 3.12, 0.1, 2.13)
+accel=controller.Accelerometer(model, 'Accelerometer 1', 'IMU', 0.3, 1.5, 0.3, 1.5, 0.3, 1.5)
 #model.store_sensor(accel)
 
 #print pot.label

@@ -21,7 +21,14 @@ class Sensor(object):
 
   def get_reading(self, playback=None):
     reading=playback.read_data(self.__class__.__name__)
-    datapacket=(reading, self)
+
+    if self.__class__.__name__=='Potentiometer':
+      processed_reading=self.pot_position(reading)
+    
+    if self.__class__.__name__=='Accelerometer':
+      processed_reading=self.acceleration(reading)
+
+    datapacket=(processed_reading, self)
     self.model.store_data(datapacket)
 
     # return (reading,self)
@@ -58,7 +65,7 @@ class Potentiometer(Sensor):
   #def 
 
   def pot_position(self, reading):
-    ratio=reading/(self.pin1-self.pin3)
+    ratio=(reading-self.pin3)/(self.pin1-self.pin3)
 
     self.curentpos=ratio
 
@@ -87,10 +94,14 @@ class Accelerometer(Sensor):
 
     model.store_sensor(self)
 
-  def acceleration(self, xvolt=0, yvolt=0, zvolt=0):
-    xaccel=(xvolt-self.xmin)/self.gradx
-    yaccel=(yvolt-self.ymin)/self.grady
-    zaccel=(zvolt-self.zmin)/self.gradz
+  def acceleration(self, reading):
+    xvolt=reading[0]
+    yvolt=reading[1]
+    zvolt=reading[2]
+
+    xaccel=(xvolt-self.xearth)/self.sensx
+    yaccel=(yvolt-self.yearth)/self.sensy
+    zaccel=(zvolt-self.zearth)/self.sensz
 
     return [xaccel, yaccel, zaccel]
 
