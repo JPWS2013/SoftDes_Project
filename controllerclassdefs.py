@@ -21,7 +21,10 @@ class Sensor(object):
 
   def get_reading(self, playback=None):
     reading=playback.read_data(self.__class__.__name__)
-    return (reading,self)
+    datapacket=(reading, self)
+    self.model.store_data(datapacket)
+
+    # return (reading,self)
 
   def query_id(self, model):
 
@@ -49,6 +52,8 @@ class Potentiometer(Sensor):
     self.pin3=outputconn
     
     self.currentpos=currentpos
+
+    model.store_sensor(self)
     
   #def 
 
@@ -79,6 +84,8 @@ class Accelerometer(Sensor):
     self.yearth=yearth
     self.sensz=sensz
     self.zearth=zearth
+
+    model.store_sensor(self)
 
   def acceleration(self, xvolt=0, yvolt=0, zvolt=0):
     xaccel=(xvolt-self.xmin)/self.gradx
