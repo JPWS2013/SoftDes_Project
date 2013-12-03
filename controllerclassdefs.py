@@ -7,21 +7,19 @@ Module that defines the sensor classes including sensor characteristics as insta
 import trace_playback as tp
 import datetime as dt
 
-class SensorLabel(object):
-  def __init__(self, label=None, location=None):
-    self.label=label
-    self.location=location
+# class SensorLabel(object):
+#   def __init__(self, label=None, location=None):
+#     self.label=label
+#     self.location=location
 
-  def __str__(self):
-    return 'Sensor Label: %s, Sensor Location: %s' % (self.label, self.location)
+#   def __str__(self):
+#     return 'Sensor Label: %s, Sensor Location: %s' % (self.label, self.location)
 
 class Sensor(object):
 
-  #def __init__(self):
-    
-
   def get_reading(self, playback=None):
     reading=playback.read_data(self.__class__.__name__)
+    timestamp=dt.datetime.today()
 
     if self.__class__.__name__=='Potentiometer':
       processed_reading=self.pot_position(reading)
@@ -29,7 +27,6 @@ class Sensor(object):
     if self.__class__.__name__=='Accelerometer':
       processed_reading=self.acceleration(reading)
 
-    timestamp=dt.datetime.today()
     datapacket=(timestamp, processed_reading, self)
     self.model.store_data(datapacket)
 
@@ -40,8 +37,7 @@ class Sensor(object):
     idnum=str(len(model.sensedict.keys()))
     return self.__class__.__name__ + idnum
 
-
-  
+ 
 class Potentiometer(Sensor):
   def __init__(self, model, resistance, maxangle, label, location, inputconn=0, outputconn=0, currentpos=0):
     
@@ -51,8 +47,9 @@ class Potentiometer(Sensor):
     
     self.senseid=self.query_id(model)
 
-
-    self.label=SensorLabel(label, location)
+    self.label=label
+    self.location=location
+    #self.label=SensorLabel(label, location)
 
     self.resistance=resistance
     self.maxangle=maxangle
@@ -63,8 +60,7 @@ class Potentiometer(Sensor):
     self.currentpos=currentpos
 
     model.store_sensor(self)
-    
-  #def 
+
 
   def pot_position(self, reading):
     ratio=(reading-self.pin3)/(self.pin1-self.pin3)
@@ -85,7 +81,9 @@ class Accelerometer(Sensor):
     self.senseid=self.query_id(model)
 
 
-    self.label=SensorLabel(label, location)
+    # self.label=SensorLabel(label, location)
+    self.label=label
+    self.location=location
 
     self.sensx=sensx
     self.xearth=xearth
@@ -106,12 +104,6 @@ class Accelerometer(Sensor):
     zaccel=(zvolt-self.zearth)/self.sensz
 
     return [xaccel, yaccel, zaccel]
-
-# class SensorCluster(Object):
-#   def __init__(self, sensor_dict):
-
-#     self.clustser=
-
 
 if __name__ == '__main__':
   playback=tp.Trace()

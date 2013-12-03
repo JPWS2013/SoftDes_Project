@@ -13,9 +13,6 @@ class Trace(object):
         if sensortype.lower()=='potentiometer':
             return self.potentiometer()
 
-
-
-
     def accelerometer(self):
         current_time=time.time()%60
         z=math.sin(current_time*math.pi/30)
@@ -25,9 +22,6 @@ class Trace(object):
         current_time=time.time()%30
         pos=1/current_time
         return pos
-        
-        
-
 
 #trace=Trace()
 

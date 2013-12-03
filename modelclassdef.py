@@ -12,7 +12,7 @@ class Model(object):
 
     def store_sensor(self, sensor):
         self.sensedict[sensor.senseid]={}
-        self.senseloc[sensor.senseid]=(sensor.__class__.__name__, sensor.label.location)
+        self.senseloc[sensor.senseid]=(sensor.__class__.__name__, sensor.location)
 
     def store_data(self, datatuple):
         timestamp=datatuple[0]
