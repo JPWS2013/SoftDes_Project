@@ -5,6 +5,7 @@ Module that defines the sensor classes including sensor characteristics as insta
 """
 
 import trace_playback as tp
+import datetime as dt
 
 class SensorLabel(object):
   def __init__(self, label=None, location=None):
@@ -28,7 +29,8 @@ class Sensor(object):
     if self.__class__.__name__=='Accelerometer':
       processed_reading=self.acceleration(reading)
 
-    datapacket=(processed_reading, self)
+    timestamp=dt.datetime.today()
+    datapacket=(timestamp, processed_reading, self)
     self.model.store_data(datapacket)
 
     # return (reading,self)

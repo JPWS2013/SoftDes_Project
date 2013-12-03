@@ -27,7 +27,10 @@ data=pot.get_reading(playback)
 data=accel.get_reading(playback)
 #model.store_data(data)
 
-#model.print_data(pot)
-#model.print_data(accel)
+data=pot.get_reading(playback)
+data=accel.get_reading(playback)
+
+# model.print_data(pot)
+# model.print_data(accel)
 
 #model.print_loc()
