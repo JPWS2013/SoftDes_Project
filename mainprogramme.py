@@ -1,6 +1,8 @@
 import controllerclassdefs as controller
 import modelclassdef as model
 import trace_playback as tp
+
+#TODO: Add docstring here to explain what's going on with the import line below
 import textviewdef as view
 
 playback=tp.Trace()
@@ -31,6 +33,6 @@ data=pot.get_reading(playback)
 data=accel.get_reading(playback)
 
 # model.print_data(pot)
-# model.print_data(accel)
+model.print_data(accel)
 
 #model.print_loc()

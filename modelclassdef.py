@@ -21,11 +21,7 @@ class Model(object):
         
         self.sensedict[sensor.senseid][timestamp]=data
 
-        if sensor.__class__.__name__=='Potentiometer':
-            self.view.display_pot(sensor)
-
-        if sensor.__class__.__name__=='Accelerometer':
-            self.view.display_accel(sensor)
+        sensor.display(self.view)
 
 
     def print_sensors(self):

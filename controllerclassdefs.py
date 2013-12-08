@@ -7,25 +7,13 @@ Module that defines the sensor classes including sensor characteristics as insta
 import trace_playback as tp
 import datetime as dt
 
-# class SensorLabel(object):
-#   def __init__(self, label=None, location=None):
-#     self.label=label
-#     self.location=location
-
-#   def __str__(self):
-#     return 'Sensor Label: %s, Sensor Location: %s' % (self.label, self.location)
-
 class Sensor(object):
 
   def get_reading(self, playback=None):
     reading=playback.read_data(self.__class__.__name__)
     timestamp=dt.datetime.today()
 
-    if self.__class__.__name__=='Potentiometer':
-      processed_reading=self.pot_position(reading)
-    
-    if self.__class__.__name__=='Accelerometer':
-      processed_reading=self.acceleration(reading)
+    processed_reading=self.data_process(reading)
 
     datapacket=(timestamp, processed_reading, self)
     self.model.store_data(datapacket)
@@ -62,12 +50,16 @@ class Potentiometer(Sensor):
     model.store_sensor(self)
 
 
-  def pot_position(self, reading):
+  def data_process(self, reading):
     ratio=(reading-self.pin3)/(self.pin1-self.pin3)
 
     self.curentpos=ratio
 
     return ratio
+
+  def display(self, view):
+
+    view.display_pot(self)
 
   def print_id(self):
     print self.senseid
@@ -94,7 +86,7 @@ class Accelerometer(Sensor):
 
     model.store_sensor(self)
 
-  def acceleration(self, reading):
+  def data_process(self, reading):
     xvolt=reading[0]
     yvolt=reading[1]
     zvolt=reading[2]
@@ -104,6 +96,11 @@ class Accelerometer(Sensor):
     zaccel=(zvolt-self.zearth)/self.sensz
 
     return [xaccel, yaccel, zaccel]
+
+  def display(self, view):
+
+    view.display_accel(self)
+
 
 if __name__ == '__main__':
   playback=tp.Trace()
