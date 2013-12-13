@@ -9,7 +9,6 @@ playback=tp.Trace()
 
 model=model.Model()
 view=view.TextView(model)
-
 #cluster=controller.SensorCluster()
 
 pot=controller.Potentiometer(model, 10000, 270, 'Potentiometer 1', 'Gas Pedal', 12, 0, 0.5)

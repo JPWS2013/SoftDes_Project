@@ -32,3 +32,4 @@ class TextView(object):
 
     def display_accel(self, sensor):
         print "Accelerometer has changed to: X: %s, Y: %s, Z: %s" % (self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][0], self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][1], self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][2])
+        
