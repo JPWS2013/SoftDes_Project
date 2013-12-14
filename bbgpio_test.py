@@ -24,7 +24,7 @@ while True:
 
 		valz=ADC.read("AIN0")
 		voltz=valz*1.8
-		accel=(voltz-(2.55/2))/(0.174/3*2.5)
+		accel=(voltz-(2.5/2))/(0.174/3*2.5)
 
 		res.append(accel)
 		#print "Accel = ", accel

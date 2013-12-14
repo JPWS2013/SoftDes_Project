@@ -27,8 +27,8 @@ class TextView(object):
             if senseprop[0]=='Accelerometer':
                 print "%s - X: %s, Y: %s, Z: %s" % (senseprop[1], self.model.sensedict[eachSensor][-1][0], self.model.sensedict[eachSensor][-1][1], self.model.sensedict[eachSensor][-1][2])
 
-    def display_pot(self, sensor):
-        print "Potentiometer has changed position to: %s degrees" % (self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]])
+    def display_pot(self, senseid):
+        print "Potentiometer has changed position to: %s degrees" % (self.model.sensedict[senseid][self.model.sensedict[senseid].keys()[-1]])
 
     def display_accel(self, sensor):
         print "Accelerometer has changed to: X: %s, Y: %s, Z: %s" % (self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][0], self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][1], self.model.sensedict[sensor.senseid][self.model.sensedict[sensor.senseid].keys()[-1]][2])
