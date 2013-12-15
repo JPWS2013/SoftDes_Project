@@ -5,7 +5,8 @@ import random
 import math
 
 class View:
-    def __init__ (self,master):
+    def __init__ (self,master,model):
+        self.model=model
 
         self.pot_value=StringVar()
         self.pot_value.set('not workin')
@@ -36,15 +37,13 @@ class View:
         self.speed=Label
 
 
-
-
         self.update()
         master.mainloop()
 
     def update(self):
         self.display_pot(random.random())
         self.display_accel((random.random(),random.random(),random.random()))
-        self.display_gaspedal(random.random())
+        self.display_gaspedal()
         self.display_brakepedal(random.random())
         self.display_time(datetime.datetime.today())
         root.after(200,self.update)
@@ -53,21 +52,7 @@ class View:
     def display_pot(self, data):
         self.pot_value.set('potentiometer: %g'%(data))
 
-#<<<<<<< HEAD
-# if __name__ == '__main__':
-#     time=datetime.datetime.today()
-     
-#     root=Tk()
-#     view=View(root)
-#     tup=(time,1.0,'potentiometer')
-#     view.display_pot(root, tup)
-#     sleep(2)
-#     tup=(time,5.0,'potentiometer')
-#     tup2=(time,[1,2,3],'accel')
-#     view.display_pot(root, tup)
-#     view.display_accel(root,tup2)
-#     root.mainloop()
-#=======
+
     def display_accel(self,datatuple):
         x=datatuple[0]
         y=datatuple[1]
@@ -75,8 +60,9 @@ class View:
         self.accel_value.set('X: %g \t Y: %g \t Z: %g' %(x,y,z))
 
 
-    def display_gaspedal(self,data):
-
+    def display_gaspedal(self):
+        senseid='Potentiometer0'
+        data=self.model.sensedict[senseid][self.model.sensedict[senseid].keys()[-1]]
         self.gaspedal.delete(ALL)
         self.gaspedal.create_rectangle(0,0,250,250,fill='blue')
         length=250
@@ -101,30 +87,8 @@ class View:
         self.now.set(datetime)
 
      
-# i=0
-# while i<10:
-#     time=datetime.datetime.today()
-#     view.display_accel(root,(time,[random.random(),random.random(),random.random()]))
-#     view.display_pot(root,(time,random.random())) 
-#     view.display_gaspedal((time,random.random()))
-#     view.display_brakepedal(random.random())
-
-#     view.display_time(root,time)
-
-#     i+=1
-#     sleep(1)
-
-# root.mainloop()
-#>>>>>>> dd2620ee8345af4a7d5b6dca4b4943401730324c
 if __name__ == '__main__':
      
     root=Tk()
     view=View(root)
-    tup=(time,1.0,'potentiometer')
-    view.display_pot(root, tup)
-    sleep(2)
-    tup=(time,5.0,'potentiometer')
-    tup2=(time,[1,2,3],'accel')
-    view.display_pot(root, tup)
-    view.display_accel(root,tup2)
-    root.mainloop()
+    
