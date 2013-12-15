@@ -1,5 +1,5 @@
 import modelclassdef as model
-import textviewdef as view
+import dash_view as view
 import serial
 
 model=model.Model()

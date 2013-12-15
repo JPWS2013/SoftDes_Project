@@ -16,10 +16,10 @@ class View:
         self.now=StringVar()
         self.now.set('fuckin fuck')
 
-        self.steering=Label(master,textvar=self.pot_value, padx=5, pady=5, relief=RIDGE,font=('Helvetica',16))
+        self.steering=Label(master,textvar=self.pot_value, width=50, padx=5, pady=5, relief=RIDGE,font=('Helvetica',16))
         self.steering.grid(row=0)
 
-        self.accel=Label(master,textvar=self.accel_value,padx=5, pady=5, relief=RIDGE, font=('Helvetica',16))
+        self.accel=Label(master,textvar=self.accel_value, width=50, padx=5, pady=5, relief=RIDGE, font=('Helvetica',16))
         self.accel.grid(row=1)
 
         self.gaspedal=Canvas(master,width=250,height=250)
@@ -53,21 +53,21 @@ class View:
     def display_pot(self, data):
         self.pot_value.set('potentiometer: %g'%(data))
 
-<<<<<<< HEAD
-if __name__ == '__main__':
-    time=datetime.datetime.today()
+#<<<<<<< HEAD
+# if __name__ == '__main__':
+#     time=datetime.datetime.today()
      
-    root=Tk()
-    view=View(root)
-    tup=(time,1.0,'potentiometer')
-    view.display_pot(root, tup)
-    sleep(2)
-    tup=(time,5.0,'potentiometer')
-    tup2=(time,[1,2,3],'accel')
-    view.display_pot(root, tup)
-    view.display_accel(root,tup2)
-    root.mainloop()
-=======
+#     root=Tk()
+#     view=View(root)
+#     tup=(time,1.0,'potentiometer')
+#     view.display_pot(root, tup)
+#     sleep(2)
+#     tup=(time,5.0,'potentiometer')
+#     tup2=(time,[1,2,3],'accel')
+#     view.display_pot(root, tup)
+#     view.display_accel(root,tup2)
+#     root.mainloop()
+#=======
     def display_accel(self,datatuple):
         x=datatuple[0]
         y=datatuple[1]
@@ -101,8 +101,6 @@ if __name__ == '__main__':
         self.now.set(datetime)
 
      
-root=Tk()
-view=View(root)
 # i=0
 # while i<10:
 #     time=datetime.datetime.today()
@@ -117,4 +115,20 @@ view=View(root)
 #     sleep(1)
 
 # root.mainloop()
->>>>>>> dd2620ee8345af4a7d5b6dca4b4943401730324c
+#>>>>>>> dd2620ee8345af4a7d5b6dca4b4943401730324c
+if __name__ == '__main__':
+
+    global root=Tk()
+    view=View(root)
+    time=datetime.datetime.today()
+     
+    root=Tk()
+    view=View(root)
+    tup=(time,1.0,'potentiometer')
+    view.display_pot(root, tup)
+    sleep(2)
+    tup=(time,5.0,'potentiometer')
+    tup2=(time,[1,2,3],'accel')
+    view.display_pot(root, tup)
+    view.display_accel(root,tup2)
+    root.mainloop()
