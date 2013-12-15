@@ -4,6 +4,7 @@ import bb_datamethods as data
 import Adafruit_BBIO.ADC as ADC
 import Adafruit_BBIO.UART as UART
 import serial
+import time
 
 #TODO: Add docstring here to explain what's going on with the import line below
 # import textviewdef as view
@@ -21,12 +22,19 @@ model=model.Model(ser)
 
 pot=controller.Potentiometer(model, 10000, 270, 'Potentiometer 1', 'Gas Pedal', 1.25, 0)
 
+# time.sleep(0.2)
+
 accel_sense=0.174/3*2.5
 earthaccel_volt=2.5/2
 accel=controller.Accelerometer(model, 'Accelerometer 1', 'IMU', accel_sense, earthaccel_volt , accel_sense, earthaccel_volt, accel_sense, earthaccel_volt)
 
+# time.sleep(0.2)
 
 while True:
 	data=pot.get_reading(datasource)
 
-	data=accel.get_reading(datasource)
+	time.sleep(0.2)
+
+# data=pot.get_reading(datasource)
+
+# data=accel.get_reading(datasource)

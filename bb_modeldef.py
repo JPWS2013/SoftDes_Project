@@ -21,7 +21,7 @@ class Model(object):
         # self.senseloc[sensor.senseid]=(sensor.__class__.__name__, sensor.location)
 
     def store_data_pot(self, datatuple):
-        timestamp=str(datatuple[0])[:-7]
+        timestamp=str(datatuple[0])
         data=str(datatuple[1])
         sensorid=str(datatuple[2].senseid)
 

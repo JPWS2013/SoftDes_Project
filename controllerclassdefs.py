@@ -67,7 +67,7 @@ class Potentiometer(Sensor):
 
     processed_reading=self.data_process(reading)
     # print "processed_reading = ", processed_reading
-
+    # print "processed_reading = ", processed_reading
     datapacket=(timestamp, processed_reading, self)
     #print "datapacket = ", datapacket
     self.model.store_data_pot(datapacket)

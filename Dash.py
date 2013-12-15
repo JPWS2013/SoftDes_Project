@@ -3,10 +3,14 @@ import datetime
 from time import sleep
 import random
 import math
+import modelclassdef as model
+import serial
 
 class View:
     def __init__ (self,master,model):
         self.model=model
+        self.master=master
+        # model.view=self
 
         self.pot_value=StringVar()
         self.pot_value.set('not workin')
@@ -36,17 +40,49 @@ class View:
 
         self.speed=Label
 
+        ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
 
-        self.update()
+        ser.close()
+        ser.open()
+
+        if ser.isOpen():
+            print "Database ready to receive data" 
+
+        self.update(ser)
         master.mainloop()
+        
 
-    def update(self):
+    def update(self, ser):
+
+        while True:
+            raw_message=ser.readline()
+
+            if raw_message[:2]=='&&':
+                break
+        
+        message=raw_message.strip()
+        command=message[2]
+        data=message[4:]
+        datalist=data.split(',')
+
+        if command=='1':
+            self.model.store_sensor(datalist[0], datalist[1], datalist[2])
+            # model.print_loc()
+
+        if command=='2':
+            self.model.store_data_pot(datalist[0], datalist[1], datalist[2])
+
+
+        if command=='3':
+            self.model.store_data_accel(datalist[0], datalist[1], datalist[2])
+
+
         self.display_pot(random.random())
         self.display_accel((random.random(),random.random(),random.random()))
         self.display_gaspedal()
         self.display_brakepedal(random.random())
         self.display_time(datetime.datetime.today())
-        root.after(200,self.update)
+        self.master.after(100,self.update, ser)
 
 
     def display_pot(self, data):
@@ -62,15 +98,28 @@ class View:
 
     def display_gaspedal(self):
         senseid='Potentiometer0'
-        data=self.model.sensedict[senseid][self.model.sensedict[senseid].keys()[-1]]
-        self.gaspedal.delete(ALL)
-        self.gaspedal.create_rectangle(0,0,250,250,fill='blue')
-        length=250
-        pot=data
-        height=length*math.sin(math.pi*pot/4+math.pi/6)
-        base=length*math.cos(math.pi*pot/4+math.pi/6)
-        self.gaspedal.create_line(0,0,base,height, width=20)
-        self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,12')
+        # print self.model.sensedict[senseid].keys()
+        try:
+            data=self.model.lastpotreading#self.model.sensedict[senseid][self.model.sensedict[senseid].keys()[-1]]
+            self.gaspedal.delete(ALL)
+            self.gaspedal.create_rectangle(0,0,250,250,fill='blue')
+            length=250
+            pot=data
+            height=length*math.sin(math.pi*pot/4+math.pi/6)
+            base=length*math.cos(math.pi*pot/4+math.pi/6)
+            self.gaspedal.create_line(0,0,base,height, width=20)
+            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,12')
+
+        except (KeyError, IndexError):
+            self.gaspedal.delete(ALL)
+            self.gaspedal.create_rectangle(0,0,250,250,fill='blue')
+            length=250
+            # pot=data
+            # height=length*math.sin(math.pi*pot/4+math.pi/6)
+            # base=length*math.cos(math.pi*pot/4+math.pi/6)
+            self.gaspedal.create_line(0,0,0,250, width=20)
+            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,12')
+
 
     def display_brakepedal(self,data):
         self.brakepedal.delete(ALL)
@@ -88,7 +137,8 @@ class View:
 
      
 if __name__ == '__main__':
-     
+    model=model.Model()
+
     root=Tk()
-    view=View(root)
+    view=View(root, model)
     
