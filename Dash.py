@@ -117,10 +117,6 @@ class View:
 # root.mainloop()
 #>>>>>>> dd2620ee8345af4a7d5b6dca4b4943401730324c
 if __name__ == '__main__':
-
-    global root=Tk()
-    view=View(root)
-    time=datetime.datetime.today()
      
     root=Tk()
     view=View(root)

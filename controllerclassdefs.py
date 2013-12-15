@@ -4,7 +4,7 @@ Module that defines the sensor classes including sensor characteristics as insta
 
 """
 
-# import trace_playback as tp
+import trace_playback as tp
 import bb_datamethods as data
 import datetime as dt
 import time
