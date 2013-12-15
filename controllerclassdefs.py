@@ -9,6 +9,18 @@ import bb_datamethods as data
 import datetime as dt
 import time
 
+
+"""
+
+AIN1 -- P9_40 -- Potentiometer
+AIN2 -- P9_37 -- Accelerometer (X-Direction)
+AIN3 -- P9_38 -- Accelerometer (Y-Direction)
+AIN0 -- P9_39 -- Accelerometer (Z-Direction)
+
+AIN4 -- P9_33 -- Input voltage to Accelerometer
+
+"""
+
 class Sensor(object):
 
   # def get_reading(self, data=None):
@@ -101,11 +113,11 @@ class Accelerometer(Sensor):
     timestamp=dt.datetime.today()
 
     processed_reading=self.data_process(reading)
-    print "processed_reading = ", processed_reading
+    # print "processed_reading = ", processed_reading
 
     datapacket=(timestamp, processed_reading, self)
     #print "datapacket = ", datapacket
-    # self.model.store_data(datapacket)
+    self.model.store_data_accel(datapacket)
   
   def data_process(self, reading):
     xvolt=reading[0]

@@ -39,20 +39,16 @@ class View:
 
 
 
-
-
-
-time=datetime.datetime.today()
-
-
+if __name__ == '__main__':
+    time=datetime.datetime.today()
      
-root=Tk()
-view=View(root)
-tup=(time,1.0,'potentiometer')
-view.display_pot(root, tup)
-sleep(2)
-tup=(time,5.0,'potentiometer')
-tup2=(time,[1,2,3],'accel')
-view.display_pot(root, tup)
-view.display_accel(root,tup2)
-root.mainloop()
+    root=Tk()
+    view=View(root)
+    tup=(time,1.0,'potentiometer')
+    view.display_pot(root, tup)
+    sleep(2)
+    tup=(time,5.0,'potentiometer')
+    tup2=(time,[1,2,3],'accel')
+    view.display_pot(root, tup)
+    view.display_accel(root,tup2)
+    root.mainloop()

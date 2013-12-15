@@ -29,21 +29,16 @@ class Model(object):
         # print transmission
         self.ser.write(transmission)
 
+    def store_data_accel(self, datatuple):
+        timestamp=str(datatuple[0])[:-7]
+        data=datatuple[1]
+        sensorid=str(datatuple[2].senseid)
 
-        # str_timestamp=str(timestamp)[:-7]
-        # self.sensedict[sensor.senseid][timestamp]=data
+        data_str=str(data[0])+';'+str(data[1])+';'+str(data[2])
 
-        # sensor.display(self.view)
-
-    # def store_data_accel(self, datatuple):
-    #     timestamp=datatuple[0]
-    #     data=datatuple[1]
-    #     sensor=datatuple[2]
-
-    #     str_timestamp=str(timestamp)[:-7]
-    #     self.sensedict[sensor.senseid][timestamp]=data
-
-    #     sensor.display(self.view)
+        transmission='&&'+'3'+','+timestamp+','+data_str+','+sensorid+'\n'
+        # print transmission
+        self.ser.write(transmission)
 
     def print_sensors(self):
         print self.sensedict.keys()

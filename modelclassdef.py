@@ -35,24 +35,31 @@ class Model(object):
 
         self.view.display_pot(senseid)
 
-    # def store_data_accel(self, str_timestamp, reading_str, senseid):
-    #     year=int(str_timestamp[:4])
-    #     month=int(str_timestamp[5:7])
-    #     day=int(str_timestamp[8:10])
-    #     hour=int(str_timestamp[11:13])
-    #     minute=int(str_timestamp[14:16])
-    #     second=int(str_timestamp[17:])
+    def store_data_accel(self, str_timestamp, reading_str, senseid):
+        data=[]
 
-    #     data=float(reading_str)
+        year=int(str_timestamp[:4])
+        month=int(str_timestamp[5:7])
+        day=int(str_timestamp[8:10])
+        hour=int(str_timestamp[11:13])
+        minute=int(str_timestamp[14:16])
+        second=int(str_timestamp[17:])
 
-    #     timestamp=dt.datetime(year, month, day, hour, minute, second)
-    #     # print type(timestamp)
+        splitdata=reading_str.split(';')
 
-    #     # print timestamp
+        for eachItem in splitdata:
+            data.append(float(eachItem))
         
-    #     self.sensedict[senseid][timestamp]=data
+        # print data
 
-    #     self.view.display_pot(senseid)
+        timestamp=dt.datetime(year, month, day, hour, minute, second)
+        # print type(timestamp)
+
+        # print timestamp
+        
+        self.sensedict[senseid][timestamp]=data
+
+        self.view.display_accel(senseid)
 
     def print_sensors(self):
         print self.sensedict.keys()

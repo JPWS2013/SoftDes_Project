@@ -18,32 +18,15 @@ ser.open()
 datasource=data.Trace()
 
 model=model.Model(ser)
-# view=view.TextView(model)
-#cluster=controller.SensorCluster()
 
 pot=controller.Potentiometer(model, 10000, 270, 'Potentiometer 1', 'Gas Pedal', 1.25, 0)
-#model.store_sensor(pot)
-#label=controller.SensorLabel('Potentiometer 1', 'Gas Pedal
 
 accel_sense=0.174/3*2.5
 earthaccel_volt=2.5/2
 accel=controller.Accelerometer(model, 'Accelerometer 1', 'IMU', accel_sense, earthaccel_volt , accel_sense, earthaccel_volt, accel_sense, earthaccel_volt)
-#model.store_sensor(accel)
 
-#print pot.label
-#model.print_sensors()
 
-data=pot.get_reading(datasource)
-#print data
-# model.store_data(data)
+while True:
+	data=pot.get_reading(datasource)
 
-# data=accel.get_reading(datasource)
-#model.store_data(data)
-
-# data=pot.get_reading(datasource)
-# data=accel.get_reading(datasource)
-
-# model.print_data(pot)
-# model.print_data(accel)
-
-#model.print_loc()
+	data=accel.get_reading(datasource)
