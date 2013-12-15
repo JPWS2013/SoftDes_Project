@@ -4,19 +4,21 @@ Module that defines the sensor classes including sensor characteristics as insta
 
 """
 
-import trace_playback as tp
+# import trace_playback as tp
+import bb_datamethods as data
 import datetime as dt
+import time
 
 class Sensor(object):
 
-  def get_reading(self, playback=None):
-    reading=playback.read_data(self.__class__.__name__)
-    timestamp=dt.datetime.today()
+  # def get_reading(self, data=None):
+  #   reading=data.read_data(self.__class__.__name__)
+  #   timestamp=dt.datetime.today()
 
-    processed_reading=self.data_process(reading)
+  #   processed_reading=self.data_process(reading)
 
-    datapacket=(timestamp, processed_reading, self)
-    self.model.store_data(datapacket)
+  #   datapacket=(timestamp, processed_reading, self)
+  #   self.model.store_data(datapacket)
 
     # return (reading,self)
 
@@ -27,7 +29,7 @@ class Sensor(object):
 
  
 class Potentiometer(Sensor):
-  def __init__(self, model, resistance, maxangle, label, location, inputconn=0, outputconn=0, currentpos=0):
+  def __init__(self, model, resistance, maxangle, label, location, inputconn=0, outputconn=0):
     
     #self.senseid=self.query_id()
     self.model=model
@@ -44,11 +46,19 @@ class Potentiometer(Sensor):
     #self.resdens=resistance/maxangle
     self.pin1=inputconn
     self.pin3=outputconn
-    
-    self.currentpos=currentpos
 
     model.store_sensor(self)
 
+  def get_reading(self, datasource):
+    reading=datasource.potentiometer()
+    timestamp=dt.datetime.today()
+
+    processed_reading=self.data_process(reading)
+    # print "processed_reading = ", processed_reading
+
+    datapacket=(timestamp, processed_reading, self)
+    #print "datapacket = ", datapacket
+    self.model.store_data_pot(datapacket)
 
   def data_process(self, reading):
     ratio=(reading-self.pin3)/(self.pin1-self.pin3)
@@ -86,6 +96,17 @@ class Accelerometer(Sensor):
 
     model.store_sensor(self)
 
+  def get_reading(self, datasource=None):
+    reading=datasource.accelerometer()
+    timestamp=dt.datetime.today()
+
+    processed_reading=self.data_process(reading)
+    print "processed_reading = ", processed_reading
+
+    datapacket=(timestamp, processed_reading, self)
+    #print "datapacket = ", datapacket
+    # self.model.store_data(datapacket)
+  
   def data_process(self, reading):
     xvolt=reading[0]
     yvolt=reading[1]
@@ -103,9 +124,9 @@ class Accelerometer(Sensor):
 
 
 if __name__ == '__main__':
-  playback=tp.Trace()
+  data=tp.Trace()
 
-  #print type(playback)
+  #print type(data)
 
   pot=Potentiometer(10000, 270)
 
@@ -114,5 +135,5 @@ if __name__ == '__main__':
   accel=Accelerometer(0.3, 2.88, 0.2, 3.12, 0.1, 2.13)
 
 
-  print accel.get_reading(playback)
-  print pot.get_reading(playback)
+  print accel.get_reading(data)
+  print pot.get_reading(data)

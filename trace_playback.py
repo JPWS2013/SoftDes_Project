@@ -7,11 +7,11 @@ import numpy
 class Trace(object):
 
 
-    def read_data(self, sensortype):
-        if sensortype.lower()=='accelerometer':
-            return self.accelerometer()
-        if sensortype.lower()=='potentiometer':
-            return self.potentiometer()
+    # def read_data(self, sensortype):
+    #     if sensortype.lower()=='accelerometer':
+    #         return self.accelerometer()
+    #     if sensortype.lower()=='potentiometer':
+    #         return self.potentiometer()
 
     def accelerometer(self):
         current_time=time.time()%60
