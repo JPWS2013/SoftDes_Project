@@ -8,11 +8,11 @@ import Adafruit_BBIO.ADC as ADC
 
 class Trace(object):
     
-    def potentiometer(self):
+    def potentiometer(self, pinstring):
 
         for i in range(5):
 
-            value=ADC.read("AIN1")
+            value=ADC.read(pinstring)
             voltage=value*1.8
             # print "voltage = ", voltage
 

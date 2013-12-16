@@ -8,18 +8,7 @@ import trace_playback as tp
 import bb_datamethods as data
 import datetime as dt
 import time
-
-
-"""
-
-AIN1 -- P9_40 -- Potentiometer
-AIN2 -- P9_37 -- Accelerometer (X-Direction)
-AIN3 -- P9_38 -- Accelerometer (Y-Direction)
-AIN0 -- P9_39 -- Accelerometer (Z-Direction)
-
-AIN4 -- P9_33 -- Input voltage to Accelerometer
-
-"""
+import math
 
 class Sensor(object):
 
@@ -36,18 +25,21 @@ class Sensor(object):
 
   def query_id(self, model):
 
-    idnum=str(len(model.sensedict.keys()))
+    idnum=str(len(model.senseloc.keys()))
     return self.__class__.__name__ + idnum
 
  
 class Potentiometer(Sensor):
-  def __init__(self, model, resistance, maxangle, label, location, inputconn=0, outputconn=0):
+  def __init__(self, pinstring, model, resistance, maxangle, label, location, inputconn=0, outputconn=0):
     
     #self.senseid=self.query_id()
     self.model=model
+    self.pin=pinstring
 
     
     self.senseid=self.query_id(model)
+
+    # print self.senseid
 
     self.label=label
     self.location=location
@@ -62,7 +54,7 @@ class Potentiometer(Sensor):
     model.store_sensor(self)
 
   def get_reading(self, datasource):
-    reading=datasource.potentiometer()
+    reading=datasource.potentiometer(self.pin)
     timestamp=dt.datetime.today()
 
     processed_reading=self.data_process(reading)
@@ -114,7 +106,7 @@ class Accelerometer(Sensor):
 
     processed_reading=self.data_process(reading)
     # print "processed_reading = ", processed_reading
-
+    
     datapacket=(timestamp, processed_reading, self)
     #print "datapacket = ", datapacket
     self.model.store_data_accel(datapacket)
@@ -147,10 +139,11 @@ class HallEffectSensor(Sensor):
     # reading=tp.halleffect()
     timestamp=dt.datetime.today()
 
-    processed_reading=tp.halleffect()
+    processed_reading=datasource.halleffect()
     # print "processed_reading = ", processed_reading
-    speedcalc=processed_reading/(4.5*11)*(math.pi*(0.000142^))
-
+    speedcalc=processed_reading/(0.8*11)*(2*math.pi*0.000142)*60
+    # print processed_reading
+    # print speedcalc
     datapacket=(timestamp, [processed_reading, speedcalc], self)
     #print "datapacket = ", datapacket
     self.model.store_data_halleffect(datapacket)
@@ -160,12 +153,14 @@ if __name__ == '__main__':
 
   #print type(data)
 
-  pot=Potentiometer(10000, 270)
+  # pot=Potentiometer(10000, 270)
 
   # # print pot.senseID
 
-  accel=Accelerometer(0.3, 2.88, 0.2, 3.12, 0.1, 2.13)
+  # accel=Accelerometer(0.3, 2.88, 0.2, 3.12, 0.1, 2.13)
+  tach=HallEffectSensor('model', 'Engine Tachometer', 'Engine Output Shaft')
 
+  print tach.get_reading(data)
 
-  print accel.get_reading(data)
-  print pot.get_reading(data)
+  # print accel.get_reading(data)
+  # print pot.get_reading(data)

@@ -74,55 +74,119 @@ class View:
 
 
         if command=='3':
+            # print 'I got a message'
             self.model.store_data_accel(datalist[0], datalist[1], datalist[2])
+
+        if command=='4':
+            self.model.store_data_halleffect(datalist[0], datalist[1], datalist[2])
 
         self.display_gaspedal()
         self.display_brakepedal()
         self.display_time(datetime.datetime.today())
         self.display_speed()
-        self.master.after(100,self.update, ser)
+        self.display_tach()
+        self.display_accel()
+        self.master.after(50,self.update, ser)
 
     def display_speed(self):
-        data=random.randrange(40)
-        theta=data*math.pi/40
-        length=100
-        base=math.cos(theta)*length
-        height=length*math.sin(theta)
-        self.speedo.delete(ALL)
-        self.speedo.create_image(300,125,image=self.speedo.image)
-        self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-        self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
+        senseid='HallEffectSensor3'
+
+        try:
+            datadict=self.model.sensedict[senseid]
+            allentries=datadict.keys()
+            allentries.sort()
+            data=datadict[allentries[-1]][1]
+
+            theta=data*math.pi/40
+            length=100
+            base=math.cos(theta)*length
+            height=length*math.sin(theta)
+            self.speedo.delete(ALL)
+            self.speedo.create_image(300,125,image=self.speedo.image)
+            self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
+            self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
+
+        except (KeyError, IndexError):
+            data=0
+            theta=data*math.pi/40
+            length=100
+            base=math.cos(theta)*length
+            height=length*math.sin(theta)
+            self.speedo.delete(ALL)
+            self.speedo.create_image(300,125,image=self.speedo.image)
+            self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
+            self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
+
 
     def display_tach(self):
-        data=random.randrange(40)
-        theta=data*math.pi/40
-        length=100
-        base=math.cos(theta)*length
-        height=length*math.sin(theta)
-        self.tach.delete(ALL)
-        self.tach.create_image(300,125,image=self.speedo.image)
-        self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
-        self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
+        senseid='HallEffectSensor3'
 
+        try:
+            datadict=self.model.sensedict[senseid]
+            allentries=datadict.keys()
+            allentries.sort()
+            data=datadict[allentries[-1]][0]
+
+            theta=data*math.pi/4000
+            length=100
+            base=math.cos(theta)*length
+            height=length*math.sin(theta)
+            self.tach.delete(ALL)
+            self.tach.create_image(300,125,image=self.speedo.image)
+            self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
+            self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
+
+        except (KeyError, IndexError):
+            data=0
+            theta=data*math.pi/4000
+            length=100
+            base=math.cos(theta)*length
+            height=length*math.sin(theta)
+            self.tach.delete(ALL)
+            self.tach.create_image(300,125,image=self.speedo.image)
+            self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
+            self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
 
     def display_accel(self):
-        self.accel.delete(ALL)
-        x=random.randrange(-5,5)
-        y=random.randrange(-5,5)
-        z=random.randrange(-5,5)
-        self.accel.create_rectangle(25,175,125,175+x*30, fill='blue')
-        self.accel.create_rectangle(175,175,275,175+y*30, fill='blue')
-        self.accel.create_rectangle(325,175,425,175+z*30, fill='blue')
-        self.accel.create_rectangle(25,25,125,325, width=5)
-        self.accel.create_line(25,175,125,175,width=5)
-        self.accel.create_rectangle(175,25,275,325, width=5)
-        self.accel.create_line(175,175,275,175,width=5)
-        self.accel.create_rectangle(325,25,425,325, width=5)
-        self.accel.create_line(325,175,425,175,width=5)
-        self.accel.create_text(75,340,text='X', font='Helvetica,16')
-        self.accel.create_text(225,340,text='Y', font='Helvetica,16')
-        self.accel.create_text(375,340,text='Z', font='Helvetica,16')
-        self.accel.create_text(225,10,text='Acceleration',font='Helvetica,16')
+        senseid='Accelerometer2'
+        
+        try:
+            datadict=self.model.sensedict[senseid]
+            allentries=datadict.keys()
+            allentries.sort()
+            data_list=datadict[allentries[-1]]
+            self.accel.delete(ALL)
+            
+            x=data_list[0]
+            y=data_list[1]
+            z=data_list[2]
+            
+            self.accel.create_rectangle(25,175,125,175+x*30, fill='blue')
+            self.accel.create_rectangle(175,175,275,175+y*30, fill='blue')
+            self.accel.create_rectangle(325,175,425,175+z*30, fill='blue')
+            self.accel.create_rectangle(25,25,125,325, width=5)
+            self.accel.create_line(25,175,125,175,width=5)
+            self.accel.create_rectangle(175,25,275,325, width=5)
+            self.accel.create_line(175,175,275,175,width=5)
+            self.accel.create_rectangle(325,25,425,325, width=5)
+            self.accel.create_line(325,175,425,175,width=5)
+            self.accel.create_text(75,340,text='X', font='Helvetica,16')
+            self.accel.create_text(225,340,text='Y', font='Helvetica,16')
+            self.accel.create_text(375,340,text='Z', font='Helvetica,16')
+            self.accel.create_text(225,10,text='Acceleration',font='Helvetica,16')
+        except (KeyError, IndexError):
+            self.accel.delete(ALL)
+            self.accel.create_rectangle(25,25,125,325, width=5)
+            self.accel.create_line(25,175,125,175,width=5)
+            self.accel.create_rectangle(175,25,275,325, width=5)
+            self.accel.create_line(175,175,275,175,width=5)
+            self.accel.create_rectangle(325,25,425,325, width=5)
+            self.accel.create_line(325,175,425,175,width=5)
+            self.accel.create_text(75,340,text='X', font='Helvetica,16')
+            self.accel.create_text(225,340,text='Y', font='Helvetica,16')
+            self.accel.create_text(375,340,text='Z', font='Helvetica,16')
+            self.accel.create_text(225,10,text='Acceleration',font='Helvetica,16')
+
 
     def display_gaspedal(self):
         senseid='Potentiometer0'
@@ -153,8 +217,13 @@ class View:
 
 
     def display_brakepedal(self):
+        senseid='Potentiometer1'
+
         try:
-            data=self.model.lastpotreading
+            datadict=self.model.sensedict[senseid]
+            allentries=datadict.keys()
+            allentries.sort()
+            data=datadict[allentries[-1]]
             self.brakepedal.delete(ALL)
             self.brakepedal.create_rectangle(0,0,250,250,fill='red')
             length=250

@@ -19,7 +19,7 @@ class Model(object):
 
     def store_data_pot(self, str_timestamp, reading_str, senseid):
         # print 'Im going to store data'
-        print "senseid = ", senseid
+        # print "senseid = ", senseid
         # year=int(str_timestamp[:4])
         # month=int(str_timestamp[5:7])
         # day=int(str_timestamp[8:10])
@@ -35,8 +35,8 @@ class Model(object):
         # print timestamp
         
         self.sensedict[senseid][str_timestamp]=data
-        self.lastpotreading=data
-        print 'lastpotreading=', self.lastpotreading
+        # self.lastpotreading=data
+        # print 'lastpotreading=', self.lastpotreading
 
         # print 'Ive stored the data'
         # print 'from model=', self.sensedict[senseid]
@@ -47,12 +47,12 @@ class Model(object):
         
         data=[]
 
-        year=int(str_timestamp[:4])
-        month=int(str_timestamp[5:7])
-        day=int(str_timestamp[8:10])
-        hour=int(str_timestamp[11:13])
-        minute=int(str_timestamp[14:16])
-        second=int(str_timestamp[17:])
+        # year=int(str_timestamp[:4])
+        # month=int(str_timestamp[5:7])
+        # day=int(str_timestamp[8:10])
+        # hour=int(str_timestamp[11:13])
+        # minute=int(str_timestamp[14:16])
+        # second=int(str_timestamp[17:])
 
         splitdata=reading_str.split(';')
 
@@ -61,15 +61,44 @@ class Model(object):
         
         # print data
 
-        timestamp=dt.datetime(year, month, day, hour, minute, second)
+        # timestamp=dt.datetime(year, month, day, hour, minute, second)
         # print type(timestamp)
 
         # print timestamp
         
-        self.sensedict[senseid][timestamp]=data
+        self.sensedict[senseid][str_timestamp]=data
+        # print "i stored data!"
+        # self.view.display_accel(senseid)
+    def store_data_halleffect(self, str_timestamp, reading_str, senseid):
+        
+        data=[]
+
+        # year=int(str_timestamp[:4])
+        # month=int(str_timestamp[5:7])
+        # day=int(str_timestamp[8:10])
+        # hour=int(str_timestamp[11:13])
+        # minute=int(str_timestamp[14:16])
+        # second=int(str_timestamp[17:])
+
+        splitdata=reading_str.split(';')
+
+        for eachItem in splitdata:
+            data.append(float(eachItem))
+        
+        # print data
+
+        # timestamp=dt.datetime(year, month, day, hour, minute, second)
+        # print type(timestamp)
+
+        # print timestamp
+        
+        self.sensedict[senseid][str_timestamp]=data
+
+        # print "I stored halleffect data!"
+
+        # print data
         
         # self.view.display_accel(senseid)
-
     def print_sensors(self):
         print self.sensedict.keys()
 

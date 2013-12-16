@@ -18,7 +18,7 @@ class Model(object):
         transmission='&&'+'1'+','+sensor.senseid+','+sensor.__class__.__name__+','+sensor.location+'\n'
         self.ser.write(transmission)
         # self.sensedict[sensor.senseid]={}
-        # self.senseloc[sensor.senseid]=(sensor.__class__.__name__, sensor.location)
+        self.senseloc[sensor.senseid]=(sensor.__class__.__name__, sensor.location)
 
     def store_data_pot(self, datatuple):
         timestamp=str(datatuple[0])
@@ -44,11 +44,12 @@ class Model(object):
         timestamp=str(datatuple[0])
         rpm=str(datatuple[1][0])
         speed=str(datatuple[1][1])
+        sensorid=str(datatuple[2].senseid)
+        
         data=rpm+';'+speed
-        sensorid=str(datatuple[3].senseid)
 
         transmission='&&'+'4'+','+timestamp+','+data+','+sensorid+'\n'
-
+        # print transmission
         self.ser.write(transmission)
 
     def print_sensors(self):

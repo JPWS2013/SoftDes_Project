@@ -1,7 +1,7 @@
 import time 
 import math
-
 import numpy
+# import datetime as dt
 
 
 class Trace(object):
@@ -24,9 +24,10 @@ class Trace(object):
         return pos
 
     def halleffect(self):
+
         current_time=time.time()%60
-        z=500*(math.sin(current_time*math.pi/30))
-        return z
+        z=3800*(math.sin(current_time*math.pi/30))
+        return abs(z)
 
 #trace=Trace()
 
