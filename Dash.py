@@ -6,12 +6,19 @@ import math
 import modelclassdef as model
 import serial
 from PIL import Image, ImageTk
+import pickle
 
 class View:
     def __init__ (self,master,model):
         self.model=model
         self.master=master
         # model.view=self
+        
+        def exit_protocol(master):
+
+            pickle.dump( model.sensedict, open( "datafile.txt", "w") )
+
+            master.quit()
 
         self.now=StringVar()
         self.now.set('Time')
@@ -27,7 +34,7 @@ class View:
         self.accel=Canvas(master, width=500, height=350)
         self.accel.grid(row=1,column=1, columnspan=3)
 
-        self.quit=Button(master,text='QUIT', command=master.quit, font=('Helvetica,12'))
+        self.quit=Button(master,text='QUIT', command=lambda: exit_protocol(master), font=('Helvetica,12'))
         self.quit.grid(row=0, column=3)
 
         self.speedo=Canvas(master, width=500, height=250)
@@ -86,7 +93,7 @@ class View:
         self.display_speed()
         self.display_tach()
         self.display_accel()
-        self.master.after(50,self.update, ser)
+        self.master.after(10,self.update, ser)
 
     def display_speed(self):
         senseid='HallEffectSensor3'

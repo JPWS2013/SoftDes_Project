@@ -46,19 +46,19 @@ tach=controller.HallEffectSensor(model, 'Engine Tachometer', 'Engine Output Shaf
 while True:
 	pot.get_reading(datasource)
 
-	time.sleep(0.06)
+	time.sleep(0.02)
 
 	tach.get_reading(trace)
 
-	time.sleep(0.06)
+	time.sleep(0.02)
 
 	pot2.get_reading(datasource)
 
-	time.sleep(0.06)
+	time.sleep(0.02)
 
 	accel.get_reading(datasource)
 
-	time.sleep(0.06)
+	time.sleep(0.02)
 
 # data=pot.get_reading(datasource)
 

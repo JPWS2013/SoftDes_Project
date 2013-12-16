@@ -5,6 +5,7 @@ Module that defines the Model class that stores and manages data received by the
 """
 
 import datetime as dt
+import sys
 
 class Model(object):
     def __init__(self, view=None):
@@ -33,8 +34,12 @@ class Model(object):
         # print type(timestamp)
 
         # print timestamp
-        
-        self.sensedict[senseid][str_timestamp]=data
+        try:    
+            self.sensedict[senseid][str_timestamp]=data
+
+        except KeyError:
+            print "Sensor does not exist. Please stop data collection on the beaglebone and run the dashboard programme first before you begin data collection again"
+            sys.exit()
         # self.lastpotreading=data
         # print 'lastpotreading=', self.lastpotreading
 
@@ -65,8 +70,12 @@ class Model(object):
         # print type(timestamp)
 
         # print timestamp
-        
-        self.sensedict[senseid][str_timestamp]=data
+        try:
+            self.sensedict[senseid][str_timestamp]=data
+
+        except KeyError:
+            print "Sensor does not exist. Please stop data collection on the beaglebone and run the dashboard programme first before you begin data collection again"
+            sys.exit()
         # print "i stored data!"
         # self.view.display_accel(senseid)
     def store_data_halleffect(self, str_timestamp, reading_str, senseid):
@@ -91,9 +100,12 @@ class Model(object):
         # print type(timestamp)
 
         # print timestamp
-        
-        self.sensedict[senseid][str_timestamp]=data
+        try:
+            self.sensedict[senseid][str_timestamp]=data
 
+        except KeyError:
+            print "Sensor does not exist. Please stop data collection on the beaglebone and run the dashboard programme first before you begin data collection again"
+            sys.exit()
         # print "I stored halleffect data!"
 
         # print data
