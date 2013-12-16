@@ -134,6 +134,26 @@ class Accelerometer(Sensor):
 
     view.display_accel(self)
 
+class HallEffectSensor(Sensor):
+  def __init__(self, model, label, location):
+    self.model=model    
+    self.senseid=self.query_id(model)
+    self.label=label
+    self.location=location
+
+    model.store_sensor(self)
+
+  def get_reading(self, datasource=None):
+    # reading=tp.halleffect()
+    timestamp=dt.datetime.today()
+
+    processed_reading=tp.halleffect()
+    # print "processed_reading = ", processed_reading
+    speedcalc=processed_reading/(4.5*11)*(math.pi*(0.000142^))
+
+    datapacket=(timestamp, [processed_reading, speedcalc], self)
+    #print "datapacket = ", datapacket
+    self.model.store_data_halleffect(datapacket)
 
 if __name__ == '__main__':
   data=tp.Trace()

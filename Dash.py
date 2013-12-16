@@ -76,6 +76,9 @@ class View:
         if command=='3':
             self.model.store_data_accel(datalist[0], datalist[1], datalist[2])
 
+        if command=='4':
+            self.model.store_data_halleffect(datalist[0], datalist[1], datalist[2])
+            
         self.display_gaspedal()
         self.display_brakepedal()
         self.display_time(datetime.datetime.today())

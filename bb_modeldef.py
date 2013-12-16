@@ -30,7 +30,7 @@ class Model(object):
         self.ser.write(transmission)
 
     def store_data_accel(self, datatuple):
-        timestamp=str(datatuple[0])[:-7]
+        timestamp=str(datatuple[0])
         data=datatuple[1]
         sensorid=str(datatuple[2].senseid)
 
@@ -38,6 +38,17 @@ class Model(object):
 
         transmission='&&'+'3'+','+timestamp+','+data_str+','+sensorid+'\n'
         # print transmission
+        self.ser.write(transmission)
+
+    def store_data_halleffect(self, datatuple):
+        timestamp=str(datatuple[0])
+        rpm=str(datatuple[1][0])
+        speed=str(datatuple[1][1])
+        data=rpm+';'+speed
+        sensorid=str(datatuple[3].senseid)
+
+        transmission='&&'+'4'+','+timestamp+','+data+','+sensorid+'\n'
+
         self.ser.write(transmission)
 
     def print_sensors(self):
