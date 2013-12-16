@@ -42,7 +42,6 @@ class View:
 
         if ser.isOpen():
             print "Database ready to receive data" 
-        ser=[]
         self.update(ser)
         master.mainloop()
         
@@ -92,7 +91,10 @@ class View:
         senseid='Potentiometer0'
         # print self.model.sensedict[senseid].keys()
         try:
-            data=self.model.sensedict[senseid][self.model.sensedict[senseid].keys()[-1]]
+            datadict=self.model.sensedict[senseid]
+            allentries=datadict.keys()
+            allentries.sort()
+            data=datadict[allentries[-1]]
             self.gaspedal.delete(ALL)
             self.gaspedal.create_rectangle(0,0,250,250,fill='blue')
             length=250
