@@ -23,6 +23,11 @@ class Trace(object):
         pos=1/current_time
         return pos
 
+    def halleffect(self):
+        current_time=time.time()%60
+        z=500*(math.sin(current_time*math.pi/30))
+        return z
+
 #trace=Trace()
 
 #print trace.read_data('accelerometer')
