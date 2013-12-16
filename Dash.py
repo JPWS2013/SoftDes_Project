@@ -14,7 +14,7 @@ class View:
         # model.view=self
 
         self.now=StringVar()
-        self.now.set('fuckin fuck')
+        self.now.set('Time')
 
         self.gaspedal=Canvas(master,width=250,height=250)
         self.gaspedal.grid(row=0,column=1)
@@ -23,6 +23,9 @@ class View:
 
         self.timer=Label(master,textvar=self.now, padx=5,pady=5,font=('Helvetica,16'))
         self.timer.grid(row=2, column=0)
+
+        self.accel=Canvas(master, width=500, height=350)
+        self.accel.grid(row=1,column=1, columnspan=3)
 
         self.quit=Button(master,text='QUIT', command=master.quit, font=('Helvetica,12'))
         self.quit.grid(row=0, column=3)
@@ -33,6 +36,9 @@ class View:
         photo = ImageTk.PhotoImage(image)
         self.speedo.image=photo
         self.speedo.create_image(300,125,image=photo)
+
+        self.tach=Canvas(master, width=500, height=250)
+        self.tach.grid(row=1,column=0)
 
 
         ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
@@ -85,7 +91,38 @@ class View:
         self.speedo.delete(ALL)
         self.speedo.create_image(300,125,image=self.speedo.image)
         self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
+        self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
 
+    def display_tach(self):
+        data=random.randrange(40)
+        theta=data*math.pi/40
+        length=100
+        base=math.cos(theta)*length
+        height=length*math.sin(theta)
+        self.tach.delete(ALL)
+        self.tach.create_image(300,125,image=self.speedo.image)
+        self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
+        self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
+
+
+    def display_accel(self):
+        self.accel.delete(ALL)
+        x=random.randrange(-5,5)
+        y=random.randrange(-5,5)
+        z=random.randrange(-5,5)
+        self.accel.create_rectangle(25,175,125,175+x*30, fill='blue')
+        self.accel.create_rectangle(175,175,275,175+y*30, fill='blue')
+        self.accel.create_rectangle(325,175,425,175+z*30, fill='blue')
+        self.accel.create_rectangle(25,25,125,325, width=5)
+        self.accel.create_line(25,175,125,175,width=5)
+        self.accel.create_rectangle(175,25,275,325, width=5)
+        self.accel.create_line(175,175,275,175,width=5)
+        self.accel.create_rectangle(325,25,425,325, width=5)
+        self.accel.create_line(325,175,425,175,width=5)
+        self.accel.create_text(75,340,text='X', font='Helvetica,16')
+        self.accel.create_text(225,340,text='Y', font='Helvetica,16')
+        self.accel.create_text(375,340,text='Z', font='Helvetica,16')
+        self.accel.create_text(225,10,text='Acceleration',font='Helvetica,16')
 
     def display_gaspedal(self):
         senseid='Potentiometer0'
@@ -102,7 +139,7 @@ class View:
             height=length*math.sin(math.pi*pot/4+math.pi/6)
             base=length*math.cos(math.pi*pot/4+math.pi/6)
             self.gaspedal.create_line(0,0,base,height, width=20)
-            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,12')
+            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,16')
 
         except (KeyError, IndexError):
             self.gaspedal.delete(ALL)
@@ -112,7 +149,7 @@ class View:
             # height=length*math.sin(math.pi*pot/4+math.pi/6)
             # base=length*math.cos(math.pi*pot/4+math.pi/6)
             self.gaspedal.create_line(0,0,0,250, width=20)
-            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,12')
+            self.gaspedal.create_text(200,75,text='Gas Pedal', font='Helvetica,16')
 
 
     def display_brakepedal(self):
