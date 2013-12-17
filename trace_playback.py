@@ -27,6 +27,6 @@ class Trace(object):
 
 if __name__ == '__main__':
 
-    # trace=Trace()
+    trace=Trace()
 
-    # print trace.halleffect('accelerometer')
+    print trace.halleffect('accelerometer')
