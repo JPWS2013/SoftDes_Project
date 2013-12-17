@@ -12,20 +12,26 @@ import math
 
 class Sensor(object):
 
-  # def get_reading(self, data=None):
-  #   reading=data.read_data(self.__class__.__name__)
-  #   timestamp=dt.datetime.today()
+  """
+  Sensor is a class that inherits from object and is used to subclass different sensors that will be read by the beaglebone.
 
-  #   processed_reading=self.data_process(reading)
+  Sensor also provides methods that are necessary for all types of sensors.
 
-  #   datapacket=(timestamp, processed_reading, self)
-  #   self.model.store_data(datapacket)
-
-    # return (reading,self)
+  """
 
   def query_id(self, model):
 
+    """
+    Queries the model for a unique sensor ID 
+
+    self: must be a Sensor object or a subclass of Sensor
+    model: must be an instance of Model as defined in the module bb_modeldef.py
+
+    Returns a string that is the unique sensor ID for the sensor
+    """
+
     idnum=str(len(model.senseloc.keys()))
+    
     return self.__class__.__name__ + idnum
 
  

@@ -114,7 +114,7 @@ class View:
             self.speedo.delete(ALL)
             self.speedo.create_image(300,125,image=self.speedo.image)
             self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
+            self.speedo.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
 
         except (KeyError, IndexError):
             data=0
