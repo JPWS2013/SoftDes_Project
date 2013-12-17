@@ -1,3 +1,13 @@
+"""
+
+This is the main module that should be run on the PC. It contains instructions for building a GUI as well as instructions for fetching data on a regular basis
+
+This module is intended to be run on a linux PC.
+
+Written for Software Design, Fall 2013 by Justin Poh and Zoe Fiddler
+
+"""
+
 from Tkinter import *
 import datetime
 from time import sleep
@@ -9,10 +19,13 @@ from PIL import Image, ImageTk
 import pickle
 
 class View:
+    """
+    This class defines methods that instantiate a dashboard GUI and regularly updates it with fresh data
+    """
+
     def __init__ (self,master,model):
         self.model=model
         self.master=master
-        # model.view=self
         
         def exit_protocol(master):
             """ Method called when quit button is pressed
@@ -25,6 +38,7 @@ class View:
             master.quit()
 
         #Initialize all of the widgets in the GUI
+
         #Time display
         self.now=StringVar()
         self.now.set('Time')
@@ -79,8 +93,11 @@ class View:
         
 
     def update(self, ser):
-        """ Gets data from Beaglebone and updates GUI to display it
-            ser: serial port
+        """ 
+        Gets data from Beaglebone and updates GUI to display it
+        ser: serial port
+
+        This function has no return value
         """
 
         while True:
@@ -121,7 +138,10 @@ class View:
         self.master.after(10,self.update, ser)
 
     def display_speed(self):
-        """ Gets data from Hall effect sensor and changes speedometer GUI to diplay it
+        """ 
+        Gets data from Hall effect sensor and changes speedometer GUI to diplay it
+        
+        This function has no return value
         """
         senseid='HallEffectSensor3' 
 
@@ -158,7 +178,10 @@ class View:
 
 
     def display_tach(self):
-         """ Gets data from Hall effect sensor and changes Tachometer GUI to diplay it
+        """ 
+        Gets data from Hall effect sensor and changes Tachometer GUI to diplay it
+        
+        This function has no return value
         """
         senseid='HallEffectSensor3'
 
@@ -195,7 +218,10 @@ class View:
     
 
     def display_accel(self):
-        """Gets data from accelerometer and changes GUI to display it
+        """
+        Gets data from accelerometer and changes GUI to display it
+
+        This function has no return value
         """
         senseid='Accelerometer2'
         
@@ -225,7 +251,7 @@ class View:
             self.accel.create_text(75,340,text='X', font=('Helvetica',16))
             self.accel.create_text(225,340,text='Y', font=('Helvetica',16))
             self.accel.create_text(375,340,text='Z', font=('Helvetica',16))
-            self.accel.create_text(225,10,text='Acceleration',font=('Helvetica',16)))
+            self.accel.create_text(225,10,text='Acceleration',font=('Helvetica',16))
        
         except (KeyError, IndexError):
             #when no data is stored, display empty fill bar
@@ -243,10 +269,13 @@ class View:
 
 
     def display_gaspedal(self):
-        """ Gets data from potentiometer and changes gas pedal GUI to display it 
+        """ 
+        Gets data from potentiometer and changes gas pedal GUI to display it 
+
+        This function has no return value
         """
         senseid='Potentiometer0'
-        # print self.model.sensedict[senseid].keys()
+
         try:
             #get current gas pedal pot reading
             datadict=self.model.sensedict[senseid]
@@ -276,8 +305,12 @@ class View:
 
 
     def display_brakepedal(self):
-        """ Gets data from potentiometer and changes brake pedal GUI to display it 
+        """ 
+        Gets data from potentiometer and changes brake pedal GUI to display it 
+
+        This function has no return value
         """
+
         senseid='Potentiometer1'
 
         try:
@@ -308,9 +341,14 @@ class View:
 
 
     def display_time(self,datetime):
-        """ Changes GUI to display current time
-            datetime: string of datetime object
+        """ 
+        Changes GUI to display current time
+
+        datetime: string of datetime object
+
+        This function has no return value
         """
+
         self.now.set(datetime)
 
      
@@ -319,4 +357,3 @@ if __name__ == '__main__':
 
     root=Tk()
     view=View(root, model)
-    
