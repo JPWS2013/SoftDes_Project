@@ -37,14 +37,14 @@ class View:
         self.quit=Button(master,text='QUIT', command=lambda: exit_protocol(master), font=('Helvetica,12'))
         self.quit.grid(row=0, column=3)
 
-        self.speedo=Canvas(master, width=500, height=250)
+        self.speedo=Canvas(master, width=500, height=300)
         self.speedo.grid(row=0,column=0)
         image = Image.open("speedo.png")
         photo = ImageTk.PhotoImage(image)
         self.speedo.image=photo
         self.speedo.create_image(300,125,image=photo)
 
-        self.tach=Canvas(master, width=600, height=250)
+        self.tach=Canvas(master, width=600, height=300)
         self.tach.grid(row=1,column=0)
         image2 = Image.open("tach.png")
         photo2 = ImageTk.PhotoImage(image2)
@@ -112,9 +112,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.speedo.delete(ALL)
-            self.speedo.create_image(300,125,image=self.speedo.image)
-            self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
+            self.speedo.create_image(275,125,image=self.speedo.image)
+            self.speedo.create_line(250,225,250-base,225-height, width=10, fill='red')
+            self.speedo.create_text(300,275,text='Speedometer (MPH)',font=('Helvetica',16))
 
         except (KeyError, IndexError):
             data=0
@@ -123,9 +123,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.speedo.delete(ALL)
-            self.speedo.create_image(300,125,image=self.speedo.image)
-            self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
+            self.speedo.create_image(275,125,image=self.speedo.image)
+            self.speedo.create_line(250,225,250-base,225-height, width=10, fill='red')
+            self.speedo.create_text(300,275,text='Speedometer (MPH)',font=('Helvetica',16))
 
 
     def display_tach(self):
@@ -142,9 +142,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.tach.delete(ALL)
-            self.tach.create_image(275,125,image=self.tach.image)
-            self.tach.create_line(250,225,250-base,225-height, width=10, fill='red')
-            self.tach.create_text(500,120,text='Tachometer (RPM)',font='Helvetica,20')
+            self.tach.create_image(275,140,image=self.tach.image)
+            self.tach.create_line(250,240,250-base,240-height, width=10, fill='red')
+            self.tach.create_text(300,280,text='Tachometer (RPM)',font=('Helvetica',16))
 
         except (KeyError, IndexError):
             data=0
@@ -153,10 +153,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.tach.delete(ALL)
-            self.tach.create_image(275,125,image=self.tach.image)
-            self.tach.create_line(250,225,250-base,225-height, width=10, fill='red')
-            self.tach.create_text(500,120,text='Tachometer (RPM)',font='Helvetica,20')
-
+            self.tach.create_image(275,140,image=self.tach.image)
+            self.tach.create_line(250,240,250-base,240-height, width=10, fill='red')
+            self.tach.create_text(300,280,text='Tachometer (RPM)',font=('Helvetica',16))
     def display_accel(self):
         senseid='Accelerometer2'
         
