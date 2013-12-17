@@ -44,8 +44,11 @@ class View:
         self.speedo.image=photo
         self.speedo.create_image(300,125,image=photo)
 
-        self.tach=Canvas(master, width=500, height=250)
+        self.tach=Canvas(master, width=600, height=250)
         self.tach.grid(row=1,column=0)
+        image2 = Image.open("tach.png")
+        photo2 = ImageTk.PhotoImage(image2)
+        self.tach.image=photo2
 
 
         ser=serial.Serial('/dev/ttyACM0', 9600) #Defines the serial port to use
@@ -111,7 +114,7 @@ class View:
             self.speedo.delete(ALL)
             self.speedo.create_image(300,125,image=self.speedo.image)
             self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
+            self.tach.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
 
         except (KeyError, IndexError):
             data=0
@@ -122,7 +125,7 @@ class View:
             self.speedo.delete(ALL)
             self.speedo.create_image(300,125,image=self.speedo.image)
             self.speedo.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Speedometer',font='Helvetica,16')
+            self.tach.create_text(500,100,text='Speedometer (MPH)',font='Helvetica,20')
 
 
     def display_tach(self):
@@ -139,9 +142,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.tach.delete(ALL)
-            self.tach.create_image(300,125,image=self.speedo.image)
-            self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
+            self.tach.create_image(275,125,image=self.tach.image)
+            self.tach.create_line(250,225,250-base,225-height, width=10, fill='red')
+            self.tach.create_text(500,120,text='Tachometer (RPM)',font='Helvetica,20')
 
         except (KeyError, IndexError):
             data=0
@@ -150,9 +153,9 @@ class View:
             base=math.cos(theta)*length
             height=length*math.sin(theta)
             self.tach.delete(ALL)
-            self.tach.create_image(300,125,image=self.speedo.image)
-            self.tach.create_line(300,200,300-base,200-height, width=10, fill='red')
-            self.tach.create_text(500,100,text='Tachometer',font='Helvetica,16')
+            self.tach.create_image(275,125,image=self.tach.image)
+            self.tach.create_line(250,225,250-base,225-height, width=10, fill='red')
+            self.tach.create_text(500,120,text='Tachometer (RPM)',font='Helvetica,20')
 
     def display_accel(self):
         senseid='Accelerometer2'
