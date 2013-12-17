@@ -7,8 +7,7 @@ Module that defines the Model class that stores and manages data received by the
 import serial
 
 class Model(object):
-    def __init__(self, ser, view=None):
-        self.view=view
+    def __init__(self, ser):
         self.ser=ser
         self.sensedict={}
         self.senseloc ={}
